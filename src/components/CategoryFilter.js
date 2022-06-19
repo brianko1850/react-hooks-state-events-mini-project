@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 
-function CategoryFilter({categories}) {
-  const[selected, setSelected]=useState(false)
-  // const selectState = selected ? "selected" : ""
-  
+function CategoryFilter({category, selectCategory, categories}) {
+ 
+  const handleClick = e =>{
+    selectCategory(e.target.innerText)
+  }
 
-
+  const categoryButtons = categories.map((cat)=>  <button key={cat} className={cat===category ? "selected" : ""} onClick={handleClick} >{cat}</button>)
+          
+  // const handleClick = e =>{
+  //   // setSelected(!selected)
+  //   selectCategory(e.target.innerText)
+  // }
   return (
     <div className="categories" >
       <h5>Category filters</h5>
-      {categories.map((category)=>{
-         const selectState = selected ? "selected" : ""
-        return(
-          <button key={category} className={selectState} onClick={()=>setSelected(!selected)} >{category}</button>
-        )
-      })}
+            {categoryButtons}
+          
     </div>
   );
 }
-
 export default CategoryFilter;
