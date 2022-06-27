@@ -8,32 +8,30 @@ console.log("Here's the data you're working with");
 console.log({ CATEGORIES, TASKS });
 
 function App() {
-  const [origTasks, setOrigTasks] = useState(TASKS)
+  const [tasks, setTasks] = useState(TASKS)
   const [category, setCategory] = useState("All")
-  const [displayedTasks, setDisplayedTaks] = useState(TASKS)
+
   
-  const handleCategoryChange = (newCategory)=>{
-    setCategory(newCategory)
-    if(newCategory==="All"){
-      setOrigTasks(TASKS)
-    } else {
-      const filteredTasks = TASKS.filter(task=>task.category===newCategory)
-      setOrigTasks(filteredTasks)
-    }
+  const handleCategoryChange = (category)=>{
+    setCategory(category)
   }
 
-  const handleDeleteTask = (text)=> {
-    const newList = displayedTasks.filter(item => item.text !== text)
-    setDisplayedTaks(newList)
+  const filteredTasks = tasks.filter(task => task.category === category || category === "All")
+
+  const handleDeleteTask = (deletedTaskText)=> {
+    setTasks(tasks.filter(task => task.text !== deletedTaskText))
   }
 
+  const onTaskFormSubmit = (newTask) => {
+    setTasks([...tasks, newTask])
+  }
 
   return (
     <div className="App">
       <h2>My tasks</h2>
       <CategoryFilter category={category} selectCategory={handleCategoryChange} categories={CATEGORIES}/>
-      <NewTaskForm category={category}/>
-      <TaskList  tasks={origTasks} displayedTasks={displayedTasks} deleteTask={handleDeleteTask}/>
+      <NewTaskForm categories={CATEGORIES.filter(category => category !== "All")} onTaskFormSubmit={onTaskFormSubmit}/>
+      <TaskList  tasks={filteredTasks} deleteTask={handleDeleteTask}/>
     </div>
   );
 }

@@ -3,10 +3,10 @@ import React, { useState } from "react";
 function CategoryFilter({category, selectCategory, categories}) {
  
   const handleClick = e =>{
-    selectCategory(e.target.innerText)
+    selectCategory(e.target.value)
   }
 
-  const categoryButtons = categories.map((cat)=>  <button key={cat} className={cat===category ? "selected" : ""} onClick={handleClick} >{cat}</button>)
+  const categoryButtons = categories.map((cat)=>  <button key={cat} className={cat===category ? "selected" : ""} value={cat} onClick={handleClick} >{cat}</button>)
           
   // const handleClick = e =>{
   //   // setSelected(!selected)
